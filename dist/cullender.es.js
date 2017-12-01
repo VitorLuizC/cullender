@@ -4,6 +4,8 @@
  * Released under the MIT License.
  */
 
+import { remove } from 'diacritics';
+
 /**
  * Default function.
  * @template T
@@ -29,10 +31,42 @@ var truthy = function (λ) {
 
 }	};
 
+/**
+ * Normalize text.
+ * @param {(string|string[])} value
+ * @returns {string}
+ */
+var normalizeText = function (value) {
+  var text = Array.isArray(value) ? value.join(' ') : value;
+  var normalizedText = remove(text.trim()).toLowerCase();
+  return normalizedText
+};
+
+/**
+ * @template T
+ * @param {string} terms
+ * @param {function(T, number, T[]): (string|Array.<string>)} λ
+ * @returns {function(T, number, T[]): boolean}
+ */
+var search = function (terms, λ) {
+  if ( λ === void 0 ) λ = DEFAULT_Λ;
+
+  return function () {
+  var args = [], len = arguments.length;
+  while ( len-- ) args[ len ] = arguments[ len ];
+
+  var text = normalizeText(λ.apply(void 0, args));
+  var result = normalizeText(terms).split(' ').every(function (term) { return text.includes(term); });
+  console.log('terms', terms.split(' '));
+  return result
+};
+};
+
 
 
 var filters = Object.freeze({
-	truthy: truthy
+	truthy: truthy,
+	search: search
 });
 
 /**
