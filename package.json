@@ -1,10 +1,13 @@
 {
   "name": "cullender",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A simple and composable way to filter data.",
-  "main": "index.js",
+  "main": "dist/cullender.common.js",
+  "module": "dist/cullender.es.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava",
+    "build": "bili src/index.js --format cjs --format es --format umd --compress umd",
+    "prepare": "npm run build && npm run test"
   },
   "repository": {
     "type": "git",
@@ -22,5 +25,9 @@
   "bugs": {
     "url": "https://github.com/VitorLuizC/cullender/issues"
   },
-  "homepage": "https://github.com/VitorLuizC/cullender#readme"
+  "homepage": "https://github.com/VitorLuizC/cullender#readme",
+  "devDependencies": {
+    "ava": "^0.24.0",
+    "bili": "^0.19.0"
+  }
 }

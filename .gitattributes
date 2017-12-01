@@ -3,3 +3,4 @@
 
 # Disable diff for lockfile
 package-lock.json -diff
+dist/* -diff
