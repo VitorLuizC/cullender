@@ -6,7 +6,7 @@
   "module": "dist/cullender.es.js",
   "scripts": {
     "test": "ava",
-    "build": "bili src/index.js --format cjs --format es --format umd --compress umd",
+    "build": "bili",
     "prepare": "npm run build && npm run test"
   },
   "repository": {
