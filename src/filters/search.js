@@ -21,6 +21,5 @@ const normalizeText = (value) => {
 export default (terms, λ = DEFAULT_Λ) => (...args) => {
   const text = normalizeText(λ(...args))
   const result = normalizeText(terms).split(' ').every((term) => text.includes(term))
-  console.log('terms', terms.split(' '))
   return result
 }

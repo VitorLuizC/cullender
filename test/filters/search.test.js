@@ -11,5 +11,8 @@ const MO_COI_VALUES = [ 'Monique Coimbra', 'Mordecoi Augusto' ]
 
 test('Cullender:filters:search return search results', (context) => {
   context.deepEqual(cull(VALUES, filters.search('mon')), MON_VALUES)
-  context.deepEqual(cull(VALUES, filters.search('mo COI', (name) => name)), MO_COI_VALUES)
+})
+
+test('Cullender:filters:search returns result for multiple search terms', (context) => {
+  context.deepEqual(cull(VALUES, filters.search('mo COI', (name) => [ name ])), MO_COI_VALUES)
 })

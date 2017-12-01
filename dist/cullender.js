@@ -375,7 +375,6 @@ var search = function (terms, λ) {
 
   var text = normalizeText(λ.apply(void 0, args));
   var result = normalizeText(terms).split(' ').every(function (term) { return text.includes(term); });
-  console.log('terms', terms.split(' '));
   return result
 };
 };
