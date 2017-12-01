@@ -11,11 +11,11 @@ const TRUTHY_DEEP_VALUES = [ { name: 'Vitor' }, { name: 'Neymar' } ]
  * Cullender truthy() filter tests.
  */
 
-test('Cullender:filters:truthy filtra apenas valores verdadeiros', (context) => {
+test('Cullender:filters:truthy return truthy values', (context) => {
   context.deepEqual(cull(VALUES, filters.truthy()), TRUTHY_VALUES)
 })
 
-test('Cullender:filters:truthy filtra apenas valores verdadeiros', (context) => {
+test('Cullender:filters:truthy return truthy values (deep)', (context) => {
   const getName = (user) => user && user.name
   context.deepEqual(cull(DEEP_VALUES, filters.truthy(getName)), TRUTHY_DEEP_VALUES)
 })
