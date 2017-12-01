@@ -20,7 +20,11 @@
     "functional",
     "typescript"
   ],
-  "author": "Vitor Cavalcanti",
+  "author": {
+    "url": "https://vitorluizc.github.io/",
+    "name": "Vitor Cavalcanti",
+    "email": "vitorluizc@outlook.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/VitorLuizC/cullender/issues"
