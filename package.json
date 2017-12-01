@@ -1,0 +1,26 @@
+{
+  "name": "cullender",
+  "version": "0.0.0",
+  "description": "A simple and composable way to filter data.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VitorLuizC/cullender.git"
+  },
+  "keywords": [
+    "cullender",
+    "filter",
+    "cull",
+    "functional",
+    "typescript"
+  ],
+  "author": "Vitor Cavalcanti",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/VitorLuizC/cullender/issues"
+  },
+  "homepage": "https://github.com/VitorLuizC/cullender#readme"
+}
