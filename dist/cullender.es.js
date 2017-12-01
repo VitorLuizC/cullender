@@ -1,3 +1,9 @@
+/**
+ * Default function.
+ * @template T
+ * @param {T} value
+ * @returns {T}
+ */
 var DEFAULT_Λ = function (value) { return value; };
 
 /**
@@ -23,6 +29,12 @@ var filters = Object.freeze({
 	truthy: truthy
 });
 
+/**
+ * Create a filter as result of other filter functions composition.
+ * @param {('AND'|'OR')} type
+ * @param {...Filter} λs
+ * @returns {Filter}
+ */
 var create = function (type) {
   var λs = [], len = arguments.length - 1;
   while ( len-- > 0 ) λs[ len ] = arguments[ len + 1 ];
@@ -37,6 +49,13 @@ var create = function (type) {
 };
 };
 
+/**
+ * Filter list using filter functions. Each filter refines the result.
+ * @template T
+ * @param {Iterable.<T>} list
+ * @param {...Filter} λs
+ * @returns {T[]}
+ */
 var cull = function (list) {
   var λs = [], len = arguments.length - 1;
   while ( len-- > 0 ) λs[ len ] = arguments[ len + 1 ];
@@ -47,5 +66,5 @@ var cull = function (list) {
 
 var index = { create: create, cull: cull, filters: filters };
 
-export { create, cull, filters };
+export { filters, create, cull };
 export default index;
