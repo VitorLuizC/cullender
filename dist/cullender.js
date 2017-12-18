@@ -1,5 +1,5 @@
 /*!
- * Cullender v0.1.0
+ * Cullender v0.2.0
  * © 2017-present Vitor Cavalcanti <vitorluizc@outlook.com> (https://vitorluizc.github.io)
  * Released under the MIT License.
  */
@@ -19,19 +19,20 @@
 var DEFAULT_Λ = function (value) { return value; };
 
 /**
- * Check if value is truthy.
+ * Check if value is into a list.
  * @template T
+ * @param {Array.<T>} list
  * @param {function(T, number, T[]): *} λ
  * @returns {function(T, number, T[]): boolean}
  */
-var truthy = function (λ) {
+var into = function (list, λ) {
 	if ( λ === void 0 ) λ = DEFAULT_Λ;
 
 	return function () {
 	var args = [], len = arguments.length;
 	while ( len-- ) args[ len ] = arguments[ len ];
 
-	return !!λ.apply(void 0, args);
+	return list.includes(λ.apply(void 0, args));
 
 }	};
 
@@ -379,11 +380,29 @@ var search = function (terms, λ) {
 };
 };
 
+/**
+ * Check if value is truthy.
+ * @template T
+ * @param {function(T, number, T[]): *} λ
+ * @returns {function(T, number, T[]): boolean}
+ */
+var truthy = function (λ) {
+	if ( λ === void 0 ) λ = DEFAULT_Λ;
+
+	return function () {
+	var args = [], len = arguments.length;
+	while ( len-- ) args[ len ] = arguments[ len ];
+
+	return !!λ.apply(void 0, args);
+
+}	};
+
 
 
 var filters = Object.freeze({
-	truthy: truthy,
-	search: search
+	into: into,
+	search: search,
+	truthy: truthy
 });
 
 /**
