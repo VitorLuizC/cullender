@@ -5,14 +5,15 @@
   "main": "dist/cullender.common.js",
   "module": "dist/cullender.es.js",
   "scripts": {
-    "test": "ava",
+    "test": "npm run build && ava",
     "build": "bili",
-    "prepare": "npm run build && npm run test"
+    "prepare": "npm test"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/VitorLuizC/cullender.git"
   },
+  "files": [ "dist" ],
   "keywords": [
     "cullender",
     "filter",

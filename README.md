@@ -1,4 +1,7 @@
 # Cullender
+
+[![Build Status][ci-badge]][ci]
+
 A simple and composable way to filter data.
 
 ## Installation
@@ -24,3 +27,7 @@ const latest = cull(
   (user) => getTime(user.created) > getTime() - 7 * DAY
 )
 ```
+
+<!-- Links -->
+[ci]: https://travis-ci.org/VitorLuizC/cullender
+[ci-badge]: https://travis-ci.org/VitorLuizC/cullender.svg?branch=master
