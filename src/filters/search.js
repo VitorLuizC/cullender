@@ -1,58 +1,34 @@
 import { DEFAULT_Λ } from '../default'
 import uncouple from 'uncouple'
-import compose from '../helpers/compose'
+import normalize from 'normalize-text'
 
 const { join, every } = uncouple(Array)
-const { normalize, replace, trim, toLowerCase: lower, split, includes } = uncouple(String)
+const { split, includes } = uncouple(String)
 
 /**
- * Merge text.
- * @param {string|string[]} value
- * @returns {string}
+ * Search term.
+ * @param {string} into
+ * @returns {function(string):boolean}
  */
-const merge = (value) => Array.isArray(value) ? join(value, ' ') : value
+const searchTerm = (into) => (term) => includes(into, term)
 
 /**
- * Remove multiple whitespaces.
- * @param {string} value
- * @returns {string}
+ * Search.
+ * @param {string} into
+ * @param {(string|Array.<string>)} terms
+ * @returns {boolean}
  */
-const whitespaces = (value) => replace(value, /\s{2,}/g, ' ')
-
-/**
- * Replace accents and special characters.
- * @example ```js
- * ('Olá, você') => 'Ola, voce'
- * ```
- * @param {string} value
- * @returns {string}
- */
-const diacritics = compose(
-  (value) => replace(value, /[\u0080-\uF8FF]/g, ''),
-  (value) => normalize(value, 'NFKD')
-)
-
-/**
- * Normalize text.
- * @param {(string|string[])} value
- * @returns {string}
- */
-const normalizeText = compose(lower, whitespaces, trim, diacritics, merge)
-
-const hasTerms = (target) => compose(
-  (terms) => every(terms, (term) => includes(target, term)),
-  (term) => split(term, ' '),
-  normalizeText
-)
+const search = (into, terms) => every(terms, searchTerm(into))
 
 /**
  * @template T
- * @param {string} terms
+ * @param {string} text
  * @param {function(T, number, T[]): (string|Array.<string>)} λ
  * @returns {function(T, number, T[]): boolean}
  */
-export default (terms, λ = DEFAULT_Λ) => (...args) => {
-  const target = normalizeText(λ(...args))
-  const result = hasTerms(target)(terms)
+export default (text, λ = DEFAULT_Λ) => (...args) => {
+  const into = normalize(λ(...args))
+  const terms = split(normalize(text), ' ')
+  const result = search(into, terms)
   return result
 }

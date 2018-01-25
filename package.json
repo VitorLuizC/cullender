@@ -13,7 +13,9 @@
     "type": "git",
     "url": "git+https://github.com/VitorLuizC/cullender.git"
   },
-  "files": [ "dist" ],
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "cullender",
     "filter",
@@ -36,6 +38,7 @@
     "bili": "^0.19.0"
   },
   "dependencies": {
+    "normalize-text": "^0.1.1",
     "uncouple": "^0.2.0"
   }
 }
