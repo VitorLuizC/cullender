@@ -4,6 +4,7 @@
  * Released under the MIT License.
  */
 
+import uncouple from 'uncouple';
 import { remove } from 'diacritics';
 
 /**
@@ -13,6 +14,9 @@ import { remove } from 'diacritics';
  * @returns {T}
  */
 var DEFAULT_Λ = function (value) { return value; };
+
+var ref$1 = uncouple(Array);
+var includes = ref$1.includes;
 
 /**
  * Check if value is into a list.
@@ -28,20 +32,61 @@ var into = function (list, λ) {
 	var args = [], len = arguments.length;
 	while ( len-- ) args[ len ] = arguments[ len ];
 
-	return list.includes(λ.apply(void 0, args));
+	return includes(list, λ.apply(void 0, args));
 
 }	};
+
+var ref$3 = uncouple(Array);
+var every$2 = ref$3.every;
+var reduce$1 = ref$3.reduceRight;
+
+var compose = function () {
+  var λs = [], len = arguments.length;
+  while ( len-- ) λs[ len ] = arguments[ len ];
+
+  var isValid = every$2(λs, function (λ) { return typeof λ === 'function'; });
+  if (!isValid)
+    { throw new Error('Can\'t compose non-function arguments.') }
+  var composition = function (value) { return reduce$1(λs, function (value, λ) { return λ(value); }, value); };
+  return composition
+};
+
+var ref$2 = uncouple(Array);
+var join = ref$2.join;
+var every$1 = ref$2.every;
+var ref$1$1 = uncouple(String);
+var replace = ref$1$1.replace;
+var trim = ref$1$1.trim;
+var lower = ref$1$1.toLowerCase;
+var split = ref$1$1.split;
+var includes$1 = ref$1$1.includes;
+
+/**
+ * Merge text.
+ * @param {string|string[]} value
+ * @returns {string}
+ */
+var merge = function (value) { return Array.isArray(value) ? join(value, ' ') : value; };
+
+/**
+ * Remove multiple whitespaces.
+ * @param {string} value
+ * @returns {string}
+ */
+var whitespaces = function (value) { return replace(value, /\s{2,}/g, ' '); };
 
 /**
  * Normalize text.
  * @param {(string|string[])} value
  * @returns {string}
  */
-var normalizeText = function (value) {
-  var text = Array.isArray(value) ? value.join(' ') : value;
-  var normalizedText = remove(text.trim()).toLowerCase();
-  return normalizedText
-};
+var normalizeText = compose(lower, whitespaces, trim, remove, merge);
+
+var hasTerms = function (target) { return compose(
+  function (terms) { return every$1(terms, function (term) { return includes$1(target, term); }); },
+  function (term) { return split(term, ' '); },
+  normalizeText
+); };
 
 /**
  * @template T
@@ -56,8 +101,8 @@ var search = function (terms, λ) {
   var args = [], len = arguments.length;
   while ( len-- ) args[ len ] = arguments[ len ];
 
-  var text = normalizeText(λ.apply(void 0, args));
-  var result = normalizeText(terms).split(' ').every(function (term) { return text.includes(term); });
+  var target = normalizeText(λ.apply(void 0, args));
+  var result = hasTerms(target)(terms);
   return result
 };
 };
@@ -87,6 +132,12 @@ var filters = Object.freeze({
 	truthy: truthy
 });
 
+var ref = uncouple(Array);
+var some = ref.some;
+var every = ref.every;
+var filter = ref.filter;
+var reduce = ref.reduce;
+
 /**
  * Create a filter as result of other filter functions composition.
  * @param {('AND'|'OR')} type
@@ -101,8 +152,8 @@ var create = function (type) {
   var args = [], len = arguments.length;
   while ( len-- ) args[ len ] = arguments[ len ];
 
-  var filter = function (λ) { return λ.apply(void 0, args); };
-  var result = type === 'AND' ? λs.every(filter) : λs.some(filter);
+  var check = type === 'AND' ? every : some;
+  var result = check(λs, function (λ) { return λ.apply(void 0, args); });
   return result
 };
 };
@@ -118,7 +169,7 @@ var cull = function (list) {
   var λs = [], len = arguments.length - 1;
   while ( len-- > 0 ) λs[ len ] = arguments[ len + 1 ];
 
-  var result = λs.reduce(function (list, λ) { return list.filter(λ); }, [].concat( list ));
+  var result = reduce(λs, filter, [].concat( list ));
   return result
 };
 

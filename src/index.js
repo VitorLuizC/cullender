@@ -1,4 +1,7 @@
+import uncouple from 'uncouple'
 import * as filters from './filters/index.js'
+
+const { some, every, filter, reduce } = uncouple(Array)
 
 /**
  * Filter function.
@@ -19,8 +22,8 @@ export { filters }
  * @returns {Filter}
  */
 export const create = (type, ...λs) => (...args) => {
-  const filter = (λ) => λ(...args)
-  const result = type === 'AND' ? λs.every(filter) : λs.some(filter)
+  const check = type === 'AND' ? every : some
+  const result = check(λs, (λ) => λ(...args))
   return result
 }
 
@@ -32,7 +35,7 @@ export const create = (type, ...λs) => (...args) => {
  * @returns {T[]}
  */
 export const cull = (list, ...λs) => {
-  const result = λs.reduce((list, λ) => list.filter(λ), [ ...list ])
+  const result = reduce(λs, filter, [ ...list ])
   return result
 }
 
