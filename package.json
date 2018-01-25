@@ -1,6 +1,6 @@
 {
   "name": "cullender",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A simple and composable way to filter data.",
   "main": "dist/cullender.common.js",
   "module": "dist/cullender.es.js",
