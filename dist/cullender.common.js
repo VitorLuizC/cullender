@@ -11,7 +11,6 @@ Object.defineProperty(exports, '__esModule', { value: true });
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var uncouple = _interopDefault(require('uncouple'));
-var diacritics = require('diacritics');
 
 /**
  * Default function.
@@ -61,6 +60,7 @@ var ref$2 = uncouple(Array);
 var join = ref$2.join;
 var every$1 = ref$2.every;
 var ref$1$1 = uncouple(String);
+var normalize = ref$1$1.normalize;
 var replace = ref$1$1.replace;
 var trim = ref$1$1.trim;
 var lower = ref$1$1.toLowerCase;
@@ -82,11 +82,24 @@ var merge = function (value) { return Array.isArray(value) ? join(value, ' ') : 
 var whitespaces = function (value) { return replace(value, /\s{2,}/g, ' '); };
 
 /**
+ * Replace accents and special characters.
+ * @example ```js
+ * ('Olá, você') => 'Ola, voce'
+ * ```
+ * @param {string} value
+ * @returns {string}
+ */
+var diacritics = compose(
+  function (value) { return replace(value, /[\u0080-\uF8FF]/g, ''); },
+  function (value) { return normalize(value, 'NFKD'); }
+);
+
+/**
  * Normalize text.
  * @param {(string|string[])} value
  * @returns {string}
  */
-var normalizeText = compose(lower, whitespaces, trim, diacritics.remove, merge);
+var normalizeText = compose(lower, whitespaces, trim, diacritics, merge);
 
 var hasTerms = function (target) { return compose(
   function (terms) { return every$1(terms, function (term) { return includes$1(target, term); }); },

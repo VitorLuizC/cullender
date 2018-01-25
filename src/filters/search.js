@@ -1,10 +1,9 @@
 import { DEFAULT_Λ } from '../default'
-import { remove as diacritics } from 'diacritics'
 import uncouple from 'uncouple'
 import compose from '../helpers/compose'
 
 const { join, every } = uncouple(Array)
-const { replace, trim, toLowerCase: lower, split, includes } = uncouple(String)
+const { normalize, replace, trim, toLowerCase: lower, split, includes } = uncouple(String)
 
 /**
  * Merge text.
@@ -19,6 +18,19 @@ const merge = (value) => Array.isArray(value) ? join(value, ' ') : value
  * @returns {string}
  */
 const whitespaces = (value) => replace(value, /\s{2,}/g, ' ')
+
+/**
+ * Replace accents and special characters.
+ * @example ```js
+ * ('Olá, você') => 'Ola, voce'
+ * ```
+ * @param {string} value
+ * @returns {string}
+ */
+const diacritics = compose(
+  (value) => replace(value, /[\u0080-\uF8FF]/g, ''),
+  (value) => normalize(value, 'NFKD')
+)
 
 /**
  * Normalize text.
