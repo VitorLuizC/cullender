@@ -3,6 +3,7 @@
   "version": "0.4.0",
   "description": "A simple and composable way to filter data.",
   "main": "dist/cullender.cjs.js",
+  "types": "cullender.d.ts",
   "module": "dist/cullender.es.js",
   "browser": "dist/cullender.js",
   "scripts": {
