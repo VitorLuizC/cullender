@@ -1,7 +1,7 @@
 import uncouple from 'uncouple'
 import * as filters from './filters/index.js'
 
-const { some, every, filter, reduce } = uncouple(Array)
+const { some, every, filter, reduce } = uncouple(Array.prototype)
 
 /**
  * Filter function.

@@ -1,7 +1,7 @@
 import { DEFAULT_Λ } from '../default'
 import uncouple from 'uncouple'
 
-const { includes } = uncouple(Array)
+const { includes } = uncouple(Array.prototype)
 
 /**
  * Check if value is into a list.

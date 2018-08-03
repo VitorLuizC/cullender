@@ -2,8 +2,8 @@ import { DEFAULT_Λ } from '../default'
 import uncouple from 'uncouple'
 import normalize from 'normalize-text'
 
-const { join, every } = uncouple(Array)
-const { split, includes } = uncouple(String)
+const { every } = uncouple(Array.prototype)
+const { split, includes } = uncouple(String.prototype)
 
 /**
  * Search term.
