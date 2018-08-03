@@ -1,9 +1,9 @@
 {
   "name": "cullender",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "A simple and composable way to filter data.",
   "main": "dist/cullender.cjs.js",
-  "types": "cullender.d.ts",
+  "types": "index.d.ts",
   "module": "dist/cullender.es.js",
   "browser": "dist/cullender.js",
   "scripts": {
@@ -16,7 +16,8 @@
     "url": "git+https://github.com/VitorLuizC/cullender.git"
   },
   "files": [
-    "dist"
+    "dist/",
+    "index.d.ts"
   ],
   "keywords": [
     "cullender",
