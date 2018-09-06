@@ -1,11 +1,14 @@
 {
   "name": "cullender",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "A simple and composable way to filter data.",
+  "cdn": "dist/cullender.js",
   "main": "dist/cullender.cjs.js",
   "types": "index.d.ts",
+  "unpkg": "dist/cullender.js",
   "module": "dist/cullender.es.js",
-  "browser": "dist/cullender.js",
+  "jsdelivr": "dist/cullender.js",
+  "umd:main": "dist/cullender.js",
   "scripts": {
     "test": "npm run build && ava",
     "build": "bili src/index.js --format es,cjs,umd --js buble --banner",
@@ -41,7 +44,7 @@
     "bili": "^3.1.2"
   },
   "dependencies": {
-    "normalize-text": "^0.4.2",
-    "uncouple": "^0.3.1"
+    "normalize-text": "^0.4.3",
+    "uncouple": "^0.4.0"
   }
 }
